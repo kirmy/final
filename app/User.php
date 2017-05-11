@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'login', 'email', 'password',
+        'login', 'password',
     ];
 
     /**
@@ -35,5 +35,10 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne('App\Profile', 'id', 'id');
+    }
+    
+    public function getRouteKeyName()
+    {
+        return 'login';
     }
 }

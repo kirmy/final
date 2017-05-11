@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('profiles', 'ProfileController');
 Route::resource('users', 'UserController');
+//Route::get('user/{id}', 'UserController@edit');
