@@ -47,7 +47,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return route('users.show', ['user' => $id]);
     }
 
     /**
@@ -56,7 +56,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($user)
     {
         return $user;
     }
