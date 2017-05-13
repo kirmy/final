@@ -12,6 +12,8 @@
 					NULL
 				@else
 					{{ $user->profile->name }}
+					{{ is_null($user->profile->email) }}
+					{{ is_null($user->profile->name) }}
 				@endif
 				
 			</li>
