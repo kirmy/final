@@ -56,7 +56,7 @@
                     },
                     postItem: function() {
                         this.$http.post('/users', this.newItem).then(function(response) {
-                            dd(123);
+                            
                             this.getItems();
                             this.newItem.name = "";
                             this.newItem.link = "";
