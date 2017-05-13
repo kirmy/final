@@ -71,9 +71,16 @@
                                         </form>
                                     </li>
                                     <li>
-                                        <a href="{{ route('users.edit', ['user' => Auth::user()->login]) }}"> 
+										@if (is_null(Auth::user()->profile))
+										<a href="{{ route('users.create') }}"> 
+                                            Create profile
+                                        </a>	
+										@else
+											
+										<a href="{{ route('users.edit', ['user' => Auth::user()->login]) }}"> 
                                             Edit
                                         </a>
+										@endif
                                     </li>
 
                                 </ul>

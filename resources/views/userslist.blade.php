@@ -8,7 +8,11 @@
 				<a href="{{ route('users.show', ['user' => $user]) }}">
                         {{ $user->login }}
                 </a>
-				
+				@if (is_null($user->profile))
+					NULL
+				@else
+					{{ $user->profile->name }}
+				@endif
 				
 			</li>
 		@empty

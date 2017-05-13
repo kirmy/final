@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/userslist', 'UserController@index');
+//Route::get('/userslist', 'HomeController@usersList');
+
 
 Route::resource('profiles', 'ProfileController');
 Route::resource('users', 'UserController');

@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return "Let's create profile !";
     }
 
     /**
@@ -45,9 +45,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return route('users.show', ['user' => $user]);
     }
 
     /**
@@ -58,7 +58,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return $user;
+        
+		return $user->profile;
     }
 
     /**
