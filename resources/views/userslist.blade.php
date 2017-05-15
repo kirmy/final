@@ -12,7 +12,7 @@
 					Не заполнен
 				@else
 					{{ $user->profile->name }}
-					<form action="{{ route('profiles.update', $user->profile->id) }}" method="POST" >
+					<form action="{{ route('profiles.update', $user->login) }}" method="POST" >
                           {{ csrf_field() }}
 						  {{ method_field('DELETE') }}
 						  <div class="form-group">

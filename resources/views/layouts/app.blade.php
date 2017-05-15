@@ -70,19 +70,32 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
-                                    <li>
-										@if (is_null(Auth::user()->profile))
+                                    
+									@if (is_null(Auth::user()->profile))
+									<li>		
 										<a href="{{ route('profiles.create') }}"> 
-                                            Create profile
+                                            Создать профиль
                                         </a>	
-										@else
-											
+									<li>	
+									@else
+									<li>		
 										<a href="{{ route('profiles.edit', ['user' => Auth::user()]) }}"> 
-                                            Edit profile
+                                            Редактировать профиль
+                                        </a>										
+																																						
+										<a href="{{ route('profiles.destroy', ['user' => Auth::user()]) }}"
+                                            onclick="event.preventDefault(); confirm_var = confirm('Удалить профиль \'{{ Auth::user()->profile->name }}\' ?');
+													if (confirm_var) document.getElementById('profile-destroy-form').submit();">
+                                            Удалить профиль
                                         </a>
-										@endif
-                                    </li>
 
+                                        <form id="profile-destroy-form" action="{{ route('profiles.destroy', ['user' => Auth::user()]) }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+											{{ method_field('DELETE') }}
+                                        </form>										
+																				
+                                    </li>
+									@endif
                                 </ul>
                             </li>
                         @endif

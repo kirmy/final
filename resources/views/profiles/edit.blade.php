@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('content') 
 <!--@{{ $name }}		   -->
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Редактирование профиля {{ $profile->name }}</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.update', $profile->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.update', $login) }}">
                         {{ csrf_field() }}
 						{{ method_field('PUT') }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -79,14 +80,25 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group">
+						
+						<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+						<textarea name="editor1" id="editor1" rows="10" cols="80">
+							This is my textarea to be replaced with CKEditor.
+						</textarea>
+						<script>
+						// Replace the <textarea id="editor1"> with a CKEditor
+						// instance, using default configuration.
+						CKEDITOR.replace( 'editor1' );
+						</script>
+                        
+						<div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Сохранить
                                 </button>
                             </div>
-                        </div>
+                        </div>											
+						
                     </form>
                 </div>
             </div>

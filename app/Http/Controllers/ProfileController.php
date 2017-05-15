@@ -37,7 +37,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {	//dd($request->name);
         $data = [
             'name' => request('name'),
             'birthday' => request('birthday'),
@@ -62,9 +62,9 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function show($user)
-    {
-        $profile = User::where('login', $user)->firstOrFail()->profile;
+    public function show($login)
+    {	//dd('show', $login);
+        $profile = User::where('login', $login)->firstOrFail()->profile;
         //$c = compact('profile');
         $name = $profile->name;
         $birthday = $profile->birthday;
@@ -82,12 +82,12 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function edit($user)
-    { 
-        $profile = User::where('login', $user)->first()->profile;
-        //dd($profile->id);
+    public function edit($login)
+    { 	//dd('edit', $login);
+        $profile = User::where('login', $login)->first()->profile;
+        //dd($login);
         //return view('profile', compact('name','birthday','email', 'telefon', 'url'));
-        return view('profiles.edit', ['profile' => $profile]);
+        return view('profiles.edit', ['profile' => $profile, 'login' => $login]);
     }
 
     /**
@@ -97,8 +97,9 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
-    {
+    public function update(Request $request, $login)
+    {	//dd($login);
+		$profile = User::where('login', $login)->first()->profile;
         $data = [
             'name' => request('name'),
             'birthday' => request('birthday'),
@@ -122,9 +123,9 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profile $profile)
-    {	//var_dump($profile->name);
-        //$profile = User::where('login', $user)->first()->profile;
+    public function destroy($login)
+    {	//dd('destroy', $login);
+        $profile = User::where('login', $login)->first()->profile;
         //dd($profile);
 		$profile->delete();
         return redirect('/userslist');
@@ -149,4 +150,13 @@ class ProfileController extends Controller
 		dd('Fail validation');
         return false;
     }
+	
+	public function destroyProfile($login)
+	{	
+		$profile = User::where('login', $login)->first()->profile;
+		if (confirm('Удалить профиль'.$profile->name)){
+			return view('profiles.destroy', ['profile' => $profile, 'login' => $login]);
+		}
+		return redirect('/userslist');
+	}
 }
