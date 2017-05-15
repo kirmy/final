@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -23,8 +25,9 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    { //View::make('profiles.create');
+	//dd('create');
+		return view('profiles.create'); 
     }
 
     /**
@@ -35,7 +38,22 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'name' => request('name'),
+            'birthday' => request('birthday'),
+            'email' => request('email'),
+            'telefon' => request('telefon'),
+            'url' => request('url')
+        ];
+
+        if ($this->validateData($data)) {
+            //dd($data);
+            Auth::user()->profile()->create($data);
+            //dd($data);
+			return redirect('/userslist');
+			//return response('', 201); 
+        }
+		else dd('store:fail validation');
     }
 
     /**
@@ -44,9 +62,18 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function show(Profile $profile)
+    public function show($user)
     {
-        //
+        $profile = User::where('login', $user)->firstOrFail()->profile;
+        //$c = compact('profile');
+        $name = $profile->name;
+        $birthday = $profile->birthday;
+        $email = $profile->email;
+        $telefon = $profile->telefon;
+        $url = $profile->url;
+        //var_dump($name, $birthday, $email);
+        return view('profiles.show')->with('profile', $profile);
+		//return view('profile', compact('name','birthday','email', 'telefon', 'url'));
     }
 
     /**
@@ -55,9 +82,12 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profile $profile)
-    {
-        //
+    public function edit($user)
+    { 
+        $profile = User::where('login', $user)->first()->profile;
+        //dd($profile->id);
+        //return view('profile', compact('name','birthday','email', 'telefon', 'url'));
+        return view('profiles.edit', ['profile' => $profile]);
     }
 
     /**
@@ -69,7 +99,21 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+        $data = [
+            'name' => request('name'),
+            'birthday' => request('birthday'),
+            'email' => request('email'),
+            'telefon' => request('telefon'),
+            'url' => request('url')
+        ];
+		//dd($data, $profile);
+        if ($this->validateData($data)) {
+            //dd($data);
+            //Auth::user()->
+			$profile->update($data);
+            return redirect('/userslist');
+			//return response('', 201);
+        }
     }
 
     /**
@@ -79,7 +123,30 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Profile $profile)
+    {	//var_dump($profile->name);
+        //$profile = User::where('login', $user)->first()->profile;
+        //dd($profile);
+		$profile->delete();
+        return redirect('/userslist');
+    }
+
+    public function validateData($data)
     {
-        //
+        $rules = [
+            'name' => 'required|min:3',
+            'birthday' => 'nullable|date',
+            'email' => 'nullable|email',
+            'telefon' => 'nullable|numeric',
+            'url' => 'nullable|url'
+        ];
+
+        $validator = \Validator::make($data, $rules);
+        $validator->validate();
+
+        if ($validator->passes()) {
+            return $data;
+        }
+		dd('Fail validation');
+        return false;
     }
 }

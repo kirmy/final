@@ -72,13 +72,13 @@
                                     </li>
                                     <li>
 										@if (is_null(Auth::user()->profile))
-										<a href="{{ route('users.create') }}"> 
+										<a href="{{ route('profiles.create') }}"> 
                                             Create profile
                                         </a>	
 										@else
 											
-										<a href="{{ route('users.edit', ['user' => Auth::user()->login]) }}"> 
-                                            Edit
+										<a href="{{ route('profiles.edit', ['user' => Auth::user()]) }}"> 
+                                            Edit profile
                                         </a>
 										@endif
                                     </li>

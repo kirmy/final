@@ -4,18 +4,28 @@
 	<div class="container" id="rest-client" v-cloak>
 		@forelse ($users as $user)
 			<li>
-				
-				<a href="{{ route('users.show', ['user' => $user]) }}">
-                        {{ $user->login }}
+				<p class="text">
+				<a href="{{ route('profiles.show', ['user' => $user]) }}">
+                    {{ $user->login }}
                 </a>
 				@if (is_null($user->profile))
-					NULL
+					Не заполнен
 				@else
 					{{ $user->profile->name }}
-					{{ is_null($user->profile->email) }}
-					{{ is_null($user->profile->name) }}
+					<form action="{{ route('profiles.update', $user->profile->id) }}" method="POST" >
+                          {{ csrf_field() }}
+						  {{ method_field('DELETE') }}
+						  <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <button type="submit" class="btn btn-warning">
+                                    Удалить профиль
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>					
 				@endif
-				
+				</p>
 			</li>
 		@empty
 			<p>No users</p>

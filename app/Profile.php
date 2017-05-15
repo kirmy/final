@@ -16,6 +16,13 @@ class Profile extends Model
         'updated_at',
         'birthday'
     ];
+    /**
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'birthday', 'email', 'telefon', 'url',
+    ];
 
     public function user()
     {

@@ -47,7 +47,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return route('users.show', ['user' => $user]);
+        //return route('users.show', ['user' => $user]);
     }
 
     /**
@@ -58,8 +58,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        
-		return $user->profile;
+        // $profile = $user->profile;
+		// return view('profile', ['profile' => $profile]);
     }
 
     /**
