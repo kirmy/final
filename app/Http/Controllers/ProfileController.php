@@ -151,12 +151,12 @@ class ProfileController extends Controller
         return false;
     }
 	
-	public function destroyProfile($login)
+/*	public function destroyProfile($login)
 	{	
 		$profile = User::where('login', $login)->first()->profile;
 		if (confirm('Удалить профиль'.$profile->name)){
 			return view('profiles.destroy', ['profile' => $profile, 'login' => $login]);
 		}
 		return redirect('/userslist');
-	}
+	}*/
 }

@@ -15,7 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('home');
     })->name('home');
 */
-	Route::get('/destroyprofile/{profile}/destroy', 'ProfileController@destroyProfile')->name('destroyprofile');
+	//Route::get('/destroyprofile/{profile}/destroy', 'ProfileController@destroyProfile')->name('destroyprofile');
 	Route::resource('profiles', 'ProfileController', ['except' => ['index', 'show']]);
 	Route::resource('users', 'UserController');
   

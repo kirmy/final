@@ -80,9 +80,9 @@
                                 @endif
                             </div>
                         </div>
-						
-						<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-						<textarea name="editor1" id="editor1" rows="10" cols="80">
+						<div class="form-group">
+			<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>			
+						<textarea name="editor1" id="editor1" rows="10" cols="80" style="visibility: visible">
 							This is my textarea to be replaced with CKEditor.
 						</textarea>
 						<script>
@@ -90,7 +90,7 @@
 						// instance, using default configuration.
 						CKEDITOR.replace( 'editor1' );
 						</script>
-                        
+                        </div>
 						<div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
@@ -106,4 +106,4 @@
     </div>
 </div>
 
-@endsection
+@stop

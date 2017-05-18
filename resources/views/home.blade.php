@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="container" id="rest-client" v-cloak>
+	<div class="container" id="rest-client" v-cloak>
             <h1 class="text-center">@{{ message }}</h1>
 	    <!--@{{ items }}-->
-            <div class="panel panel-info" v-for="item in items">
-		@{{ item.login }}
+            <div class="panel panel-info" v-for="user in users">
+		@{{ user.login }}
             </div>
 	</div>
         <script src="https://unpkg.com/vue"></script>
@@ -14,11 +14,11 @@
         <script>
             Vue.http.options.root = '/users';
             Vue.http.headers.common['X-CSRF-TOKEN'] = "{!! csrf_token() !!}";
-            var app = new Vue({
+            var app1 = new Vue({
                 el: '#rest-client',
                 data: {
-                    message: 'Users',
-                    items: [],
+                    message: "{{ asset('js/app.js') }}",
+                    users: [{login:'k1'}, {login:'d2'}, {login:'test3'}],
                     newItem: {
                         name: '',
                         link: ''
@@ -45,9 +45,9 @@
                     },
                     getItems: function() {
                         this.$http.get('/users').then(response => {
-			    // console.log(response.body, this.items);
-                            this.items = response.body;
-			    // console.log(this.items);
+			    //console.log(response.body, this.items);
+                            this.users = response.body;
+			    console.log(this.users[0].login);
                             this.errors = {
                                 name: '',
                                 link: ''
@@ -77,6 +77,6 @@
                     }
                 }
             });
-            app.getItems();
+            app1.getItems();
         </script>  
 @endsection
