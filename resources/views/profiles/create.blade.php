@@ -2,23 +2,12 @@
 @extends('layouts.app')
 @section('content') 
 <div class="container">
-<!--
-<nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{{ URL::to('profiles') }}">Nerd Alert</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="{{ URL::to('profiles') }}">View all profiles</a></li>
-        <li><a href="{{ URL::to('profiles/create') }}">Create a profile</a>
-    </ul>
-</nav>
--->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Создание профиля</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -90,7 +79,34 @@
                                 @endif
                             </div>
                         </div>
+						
+						<div class="form-group">  
+                            <div class="col-md-6">
+								<img src="app/public/P1060214.JPG" alt="Profile image" style="width:304px;height:228px;display: block">
+                                <!-- <input id="url" type="url" class="form-control" name="url" value="{{ old('url') }}">
+								.image-wrapper {
+								  padding: 5px;
+								  border: 1px #ddd solid;
+								  height auto;
+								  width: 200px;
+								} -->
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label for="image" class="col-md-4 control-label">Загрузить изображение</label>
 
+                            <div class="col-md-6">
+                                <input id="image" type="file" class="form-control" name="image" accept="image/*" value="{{ old('image') }}">
+
+                                @if ($errors->has('image'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+						
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

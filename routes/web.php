@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
 */
 	//Route::get('/destroyprofile/{profile}/destroy', 'ProfileController@destroyProfile')->name('destroyprofile');
 	Route::resource('profiles', 'ProfileController', ['except' => ['index', 'show']]);
-	Route::resource('users', 'UserController');
+	Route::resource('users', 'UserController', ['except' => ['index', 'show']]);
   
 }); 
 
@@ -28,7 +28,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/userslist', 'UserController@index');
+Route::get('uploadform', 'HomeController@imageUpload');
+Route::post('uploadfile', 'HomeController@imageUploadPost');
+/* function(Request $request) { 
+	$request->file('image')->store('images');
+	return back();
+});*/
+Route::resource('users', 'UserController', ['only' => ['index', 'show']]);
 Route::resource('profiles', 'ProfileController', ['only' => ['index', 'show']]);
 //Route::get('/profiles/userslist', 'HomeController@usersList')->name('profiles.show');
 

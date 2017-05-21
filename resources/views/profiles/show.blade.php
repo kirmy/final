@@ -38,7 +38,27 @@
 								<a href="{{ $profile->url }}">                                                                             
 									<strong>{{ $profile->url }}</strong>
 								</a>
-                            </p>                       
+                            </p>
+							
+							<!-- jQuery -->
+							<script src="//code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+       
+							<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+							<textarea name="addition" id="addition" rows="10" cols="80" style="visibility: visible">
+							<!--This is my textarea to be replaced with CKEditor.-->
+							</textarea>
+							<script>
+								var editor = CKEDITOR.replace( 'addition' );
+								
+								var value = "{!! $profile->addition !!}";
+								//console.log( value );
+								editor.setData(value);
+								//editor.setReadOnly([true]);
+								//document.getElementById('addition').innerHTML = '<p>This is a new paragraph.</p>';//"{!! $profile->addition !!}";
+								//console.log("{!! $profile->addition !!}");//document.getElementById('addition').value);
+							</script>
                 </div>
             </div>
         </div>

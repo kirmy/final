@@ -6,6 +6,7 @@ use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -37,20 +38,33 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {	//dd($request->name);
+    {
         $data = [
             'name' => request('name'),
             'birthday' => request('birthday'),
             'email' => request('email'),
             'telefon' => request('telefon'),
-            'url' => request('url')
+            'url' => request('url'),
+			'addition' => request('addition'),
+			'image' => request('image')
         ];
-
+		//dd($request);
+		
         if ($this->validateData($data)) {
             //dd($data);
+			$path = $request->file('image')->store('images');
+			dd($path);
+			$contents = Storage::get(storage_path('app/public/') . $path);
+			dd($contents, storage_path('app/public/') . $path);
+			if ($request->hasFile('image')) {
+				$path = $request->file('image')->path();
+				$extension = $request->file('image')->extension();
+				dd($path, $extension);
+			}
+			$path = $request->file('image')->store('avatars');
             Auth::user()->profile()->create($data);
             //dd($data);
-			return redirect('/userslist');
+			return redirect('/users');
 			//return response('', 201); 
         }
 		else dd('store:fail validation');
@@ -105,14 +119,15 @@ class ProfileController extends Controller
             'birthday' => request('birthday'),
             'email' => request('email'),
             'telefon' => request('telefon'),
-            'url' => request('url')
+            'url' => request('url'),
+			'addition' => request('addition')
         ];
-		//dd($data, $profile);
+		//dd($data);
         if ($this->validateData($data)) {
             //dd($data);
             //Auth::user()->
 			$profile->update($data);
-            return redirect('/userslist');
+            return redirect('/users');
 			//return response('', 201);
         }
     }
@@ -128,7 +143,7 @@ class ProfileController extends Controller
         $profile = User::where('login', $login)->first()->profile;
         //dd($profile);
 		$profile->delete();
-        return redirect('/userslist');
+        return redirect('/users');
     }
 
     public function validateData($data)
@@ -138,7 +153,8 @@ class ProfileController extends Controller
             'birthday' => 'nullable|date',
             'email' => 'nullable|email',
             'telefon' => 'nullable|numeric',
-            'url' => 'nullable|url'
+            'url' => 'nullable|url',
+			//'image' => 'mimes:png'
         ];
 
         $validator = \Validator::make($data, $rules);
@@ -157,6 +173,6 @@ class ProfileController extends Controller
 		if (confirm('Удалить профиль'.$profile->name)){
 			return view('profiles.destroy', ['profile' => $profile, 'login' => $login]);
 		}
-		return redirect('/userslist');
+		return redirect('/users');
 	}*/
 }

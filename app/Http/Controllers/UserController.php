@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('userslist',['users' => $users]);
+        return view('users',['users' => $users]);
     }
 
     /**
@@ -80,8 +80,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($login)
     {
-        //
+        $user = User::where('login', $login)->first();// User::find($id);
+		//$profile = User::where('login', $login)->first()->profile;
+		$user->delete();
+		// redirect
+		Session::flash('message', 'Successfully deleted the user!');
+		return Redirect::to('users');
+		
     }
 }
