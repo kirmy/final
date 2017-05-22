@@ -82,7 +82,7 @@
 						
 						<div class="form-group">  
                             <div class="col-md-6">
-								<img src="app/public/P1060214.JPG" alt="Profile image" style="width:304px;height:228px;display: block">
+								<img src="/images/P1060214.JPG" alt="Profile image" style="width:304px;height:228px;display: block">
                                 <!-- <input id="url" type="url" class="form-control" name="url" value="{{ old('url') }}">
 								.image-wrapper {
 								  padding: 5px;

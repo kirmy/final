@@ -1,116 +1,13 @@
-<!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <!-- Scripts -->
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->login }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                    
-									@if (is_null(Auth::user()->profile))
-									<li>		
-										<a href="{{ route('profiles.create') }}"> 
-                                            Создать профиль
-                                        </a>	
-									<li>	
-									@else
-									<li>		
-										<a href="{{ route('profiles.edit', ['user' => Auth::user()]) }}"> 
-                                            Редактировать профиль
-                                        </a>										
-																																						
-										<a href="{{ route('profiles.destroy', ['user' => Auth::user()]) }}"
-                                            onclick="event.preventDefault(); confirm_var = confirm('Удалить профиль \'{{ Auth::user()->profile->name }}\' ?');
-													if (confirm_var) document.getElementById('profile-destroy-form').submit();">
-                                            Удалить профиль
-                                        </a>
-
-                                        <form id="profile-destroy-form" action="{{ route('profiles.destroy', ['user' => Auth::user()]) }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-											{{ method_field('DELETE') }}
-                                        </form>										
-																				
-                                    </li>
-									@endif
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-		<div class="container">
+<!-- resources/views/profiles/edit.blade.php -->
+@extends('layouts.app')
+@section('content') 
+<div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Редактирование профиля {{ $profile->name }}</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.update', $login) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.update', $login) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 						{{ method_field('PUT') }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -182,33 +79,39 @@
                                 @endif
                             </div>
                         </div>
-						<div class="form-group">
 						
-						<input id="addition2" type="text" class="form-control" name="addition2" value = "{{ $profile->addition }}">
-						
-						<!-- jQuery -->
-				        <script src="//code.jquery.com/jquery.js"></script>
-				        <!-- Bootstrap JavaScript -->
-				        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-				        <!-- Vue.js -->
-				        <script src="https://unpkg.com/vue"></script>
-				        <script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
-						
-						<!--<script src="../../ckeditor/ckeditor.js"></script>-->
-						<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-						<!--<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>-->
-						<textarea name="addition" id="addition" rows="10" cols="80" style="visibility: visible">
-							<--This is my textarea to be replaced with CKEditor.-->
-						</textarea>
-						<script>
-						// Replace the <textarea id="editor1"> with a CKEditor
-						// instance, using default configuration.
-						var editor = CKEDITOR.replace( 'addition' );
-						//var value = "{ $profile->addition }}";
-						//console.log( value );
-						editor.setData( "{!! $profile->addition !!}" );
-						</script>
+						<div class="form-group">  
+                            <div class="col-md-6">
+								<img src="{{ url('images/kirill.JPG') }}" alt="Profile image" style="width:304px;height:228px;display: block">
+                                <!-- <input id="url" type="url" class="form-control" name="url" value="{{ old('url') }}">
+								.image-wrapper {
+								  padding: 5px;
+								  border: 1px #ddd solid;
+								  height auto;
+								  width: 200px;
+								} -->
+                            </div>
                         </div>
+						
+						<div class="form-group">						
+							<input id="addition2" type="text" class="form-control" name="addition2" value = "{{ url('images/kirill.JPG') }}">
+							
+							<!--<script src="../../ckeditor/ckeditor.js"></script>-->
+							<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+							<!--<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>-->
+							<textarea name="addition" id="addition" rows="10" cols="80" style="visibility: visible">
+								<--This is my textarea to be replaced with CKEditor.-->
+							</textarea>
+							<script>
+							// Replace the <textarea id="editor1"> with a CKEditor
+							// instance, using default configuration.
+							var editor = CKEDITOR.replace( 'addition' );
+							//var value = "{ $profile->addition }}";
+							//console.log( value );
+							editor.setData( "{!! $profile->addition !!}" );
+							</script>
+                        </div>
+						
 						<div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
@@ -224,12 +127,4 @@
     </div>
 </div>
 
-		
-		
-    <!--    @yield('content') -->
-    </div>
-
-    <!-- Scripts
-    <script src="{{ asset('js/app.js') }}"></script>-->
-</body>
-</html>
+@stop

@@ -21,7 +21,7 @@ class Profile extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'birthday', 'email', 'telefon', 'url', 'addition'
+        'name', 'birthday', 'email', 'telefon', 'url', 'addition', 'imagefilename'
     ];
 
     public function user()

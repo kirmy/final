@@ -48,20 +48,14 @@ class ProfileController extends Controller
 			'addition' => request('addition'),
 			'image' => request('image')
         ];
-		//dd($request);
 		
         if ($this->validateData($data)) {
             //dd($data);
-			$path = $request->file('image')->store('images');
-			dd($path);
-			$contents = Storage::get(storage_path('app/public/') . $path);
-			dd($contents, storage_path('app/public/') . $path);
-			if ($request->hasFile('image')) {
-				$path = $request->file('image')->path();
-				$extension = $request->file('image')->extension();
-				dd($path, $extension);
-			}
-			$path = $request->file('image')->store('avatars');
+			$imageName =  Auth::user()->login . '.' . $request->file('image')->getClientOriginalExtension();
+			$data['imagefilename'] = $request->file('image')->storeAs('images', $imageName);
+			//dd($data);
+			
+			//$data->imagefilename
             Auth::user()->profile()->create($data);
             //dd($data);
 			return redirect('/users');
@@ -154,7 +148,7 @@ class ProfileController extends Controller
             'email' => 'nullable|email',
             'telefon' => 'nullable|numeric',
             'url' => 'nullable|url',
-			//'image' => 'mimes:png'
+			'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
 
         $validator = \Validator::make($data, $rules);
@@ -165,7 +159,8 @@ class ProfileController extends Controller
         }
 		dd('Fail validation');
         return false;
-    }
+	}
+}
 	
 /*	public function destroyProfile($login)
 	{	
@@ -174,5 +169,4 @@ class ProfileController extends Controller
 			return view('profiles.destroy', ['profile' => $profile, 'login' => $login]);
 		}
 		return redirect('/users');
-	}*/
 }
