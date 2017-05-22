@@ -43,20 +43,20 @@ class HomeController extends Controller
     */
     public function imageUploadPost(Request $request)
     {
-    	$this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+		$this->validate($request, [
+			'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
-
-        $imageName = time().'.'.$request->file('image')->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $imageName);
+		//$request->file('image')->store('my_image');
+		$imageName = time().'.'.$request->file('image')->getClientOriginalExtension();
+		//dd($request->file('image')->extension(), $request->file('image')->getClientOriginalExtension(), $request->file('image')->path());
+		$request->file('image')->move(public_path('images'), $imageName);
 		//$request->file('image')->store('images');
-    	return back()
-    		->with('success','Image Uploaded successfully.')
-    		->with('path',$imageName);
-    }
+		return back()
+			->with('success', 'Image Uploaded successfully.')
+			->with('path', $imageName);
+	}
 	/*public function usersList()
 	{
-        
-	return view('userslist');
+		return view('userslist');
 	}*/
 }

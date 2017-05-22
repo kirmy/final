@@ -15,7 +15,7 @@ class ChangeAdditionToTEXT extends Migration
     {
         Schema::table('profiles', function (Blueprint $table) {
             $table->text('addition')->change();
-			$table->string('imagefilename');
+			$table->string('imagefilename')->nullable(); ;
         });
     }
     /**

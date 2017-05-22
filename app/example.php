@@ -17,10 +17,7 @@ $exists = Storage::disk('s3')->exists('file.jpg');
     'visibility' => 'public',
 ],
 
-use Illuminate\Support\Facades\Storage;
-
 Storage::put('file.jpg', $contents);
-
 Storage::put('file.jpg', $resource);
 
 $path = $request->file('avatar')->store('avatars');
@@ -34,7 +31,6 @@ $path = $request->photo->storeAs('images', 'filename.jpg', 's3');
 Storage::delete(['file1.jpg', 'file2.jpg']);
 
 $file = $request->file('photo');
-
 $file = $request->photo;
 if ($request->hasFile('photo')) {
     //
@@ -46,7 +42,6 @@ $path = $request->photo->path();
 $extension = $request->photo->extension();
 
 $imageName = $product->id . '.' . $request->file('image')->getClientOriginalExtension();
-
 $request->file('image')->move( base_path() . '/public/images/catalog/', $imageName );
 
 return \Redirect::route('admin.products.edit', array($product->id))->with('message', 'Product added!');

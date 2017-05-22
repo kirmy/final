@@ -7,9 +7,17 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+	<style type="text/css">
+		body, html { heigth: 100%;}
+		
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
 </head>
-<body>
+<body class="container">
 	<form class="form-horizontal" role="form" method="POST" action="uploadfile" enctype="multipart/form-data">											
 
 
@@ -17,8 +25,9 @@
 		<div class="alert alert-success alert-block">
 			<button type="button" class="close" data-dismiss="alert">×</button>
 		        <strong>{{ $message }}</strong>
+				<strong>{{ Session::get('path') }}</strong>	
 		</div>
-		<img src="/images/{{ Session::get('path') }}">
+		<img src="/images/{{ Session::get('path') }}" style="width:304px;height:228px;">
 		@endif
 
 		<!-- <form action="{{ url('image-upload') }}" enctype="multipart/form-data" method="POST"> -->
