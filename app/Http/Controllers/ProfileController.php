@@ -52,7 +52,7 @@ class ProfileController extends Controller
         if ($this->validateData($data)) {
             //dd($data);
 			$imageName =  Auth::user()->login . '.' . $request->file('image')->getClientOriginalExtension();
-			$data['imagefilename'] = $request->file('image')->storeAs('images', $imageName);
+			$data['imagefilename'] = $request->file('image')->storeAs('public/images', $imageName);
 			//dd($data);
 			
 			//$data->imagefilename
@@ -93,7 +93,7 @@ class ProfileController extends Controller
     public function edit($login)
     { 	//dd('edit', $login);
         $profile = User::where('login', $login)->first()->profile;
-        //dd($login);
+        //dd($profile->imagefilename);
         //return view('profile', compact('name','birthday','email', 'telefon', 'url'));
         return view('profiles.edit', ['profile' => $profile, 'login' => $login]);
     }
@@ -108,18 +108,21 @@ class ProfileController extends Controller
     public function update(Request $request, $login)
     {	//dd($login);
 		$profile = User::where('login', $login)->first()->profile;
-        $data = [
+		$data = [
             'name' => request('name'),
             'birthday' => request('birthday'),
             'email' => request('email'),
             'telefon' => request('telefon'),
             'url' => request('url'),
-			'addition' => request('addition')
+			'addition' => request('addition'),
+			'image' => request('image')
         ];
 		//dd($data);
         if ($this->validateData($data)) {
             //dd($data);
             //Auth::user()->
+			$imageName =  Auth::user()->login . '.' . $request->file('image')->getClientOriginalExtension();
+			$data['imagefilename'] = $request->file('image')->storeAs('public/images', $imageName);
 			$profile->update($data);
             return redirect('/users');
 			//return response('', 201);

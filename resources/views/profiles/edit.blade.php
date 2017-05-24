@@ -82,7 +82,7 @@
 						
 						<div class="form-group">  
                             <div class="col-md-6">
-								<img src="{{ url('images/kirill.JPG') }}" alt="Profile image" style="width:304px;height:228px;display: block">
+								<img src="{{ asset('storage/public/'.  $profile->imagefilename) }}" alt="Profile image" style="width:304px;height:228px;display: block">
                                 <!-- <input id="url" type="url" class="form-control" name="url" value="{{ old('url') }}">
 								.image-wrapper {
 								  padding: 5px;
@@ -94,7 +94,7 @@
                         </div>
 						
 						<div class="form-group">						
-							<input id="addition2" type="text" class="form-control" name="addition2" value = "{{ url('images/kirill.JPG') }}">
+							<input id="image" type="file" class="form-control" name="image" accept="image/*" value="{{ old('$profile->imagefilename') }}">
 							
 							<!--<script src="../../ckeditor/ckeditor.js"></script>-->
 							<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
