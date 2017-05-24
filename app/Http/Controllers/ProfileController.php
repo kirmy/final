@@ -114,9 +114,10 @@ class ProfileController extends Controller
             'email' => request('email'),
             'telefon' => request('telefon'),
             'url' => request('url'),
-			'addition' => request('addition')
+			'addition' => request('addition'),
+			'imagefilename' => request('imagefilename'),
         ];
-		//dd($data);
+		dd($data['imagefilename']);
         if ($this->validateData($data)) {
             //dd($data);
             //Auth::user()->

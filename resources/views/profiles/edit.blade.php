@@ -94,7 +94,7 @@
                         </div>
 						
 						<div class="form-group">						
-							<input id="addition2" type="text" class="form-control" name="addition2" value = "{{ url('images/kirill.JPG') }}">
+							<input id="imagefilename" type="file" class="form-control" name="imagefilename">
 							
 							<!--<script src="../../ckeditor/ckeditor.js"></script>-->
 							<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
