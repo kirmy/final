@@ -18,18 +18,19 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::get('/destroyprofile/{profile}/destroy', 'ProfileController@destroyProfile')->name('destroyprofile');
 	Route::resource('profiles', 'ProfileController', ['except' => ['index', 'show']]);
 	Route::resource('users', 'UserController', ['except' => ['index', 'show']]);
-  
-}); 
+
+});
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Auth::routes();
 
+//Route::get('profiles/{profile}/edit', 'ProfileController@edit');
 Route::get('/home', 'HomeController@index');
 Route::get('uploadform', 'HomeController@imageUpload');
-Route::post('uploadfile', 'HomeController@imageUploadPost');
+Route::post('uploadfile', 'HomeController@imageUploadPost')->name('uploadf');
 /* function(Request $request) { 
 	$request->file('image')->store('images');
 	return back();

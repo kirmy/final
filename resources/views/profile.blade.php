@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@section('content') 
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
+
+<body>
 <!--@{{ $name }}		   -->
 <div class="container">
     <div class="row">
@@ -7,14 +9,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Профиль</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="">
                         {{ csrf_field() }}
-
+<img src="kirill.jpg" alt="Profile image" style="width:304px;height:228px;display: block">
+{{ Storage::url('file.txt') }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Имя</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -28,7 +31,7 @@
                             <label for="birthday" class="col-md-4 control-label">День рождения</label>
 
                             <div class="col-md-6">
-                                <input id="birthday" type="date" class="form-control" name="birthday" value="{{ $birthday }}">
+                                <input id="birthday" type="date" class="form-control" name="birthday" value="">
 
                                 @if ($errors->has('birthday'))
                                     <span class="help-block">
@@ -42,7 +45,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email }}">
+                                <input id="email" type="email" class="form-control" name="email" value="">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -56,7 +59,7 @@
                             <label for="telefon" class="col-md-4 control-label">Телефон</label>
 
                             <div class="col-md-6">
-                                <input id="telefon" type="tel" class="form-control" name="telefon" value="{{ $telefon }}">
+                                <input id="telefon" type="tel" class="form-control" name="telefon" value="">
 
                                 @if ($errors->has('telefon'))
                                     <span class="help-block">
@@ -70,7 +73,7 @@
                             <label for="url" class="col-md-4 control-label">Адрес сайта</label>
 
                             <div class="col-md-6">
-                                <input id="url" type="url" class="form-control" name="url" value="{{ $url }}">
+                                <input id="url" type="url" class="form-control" name="url" value="">
 
                                 @if ($errors->has('url'))
                                     <span class="help-block">
@@ -93,5 +96,4 @@
         </div>
     </div>
 </div>
-
-@endsection
+</body>

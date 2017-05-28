@@ -81,8 +81,9 @@
                         </div>
 						
 						<div class="form-group">  
-                            <div class="col-md-6">
-								<img src="{{ asset('storage/public/'.  $profile->imagefilename) }}" alt="Profile image" style="width:304px;height:228px;display: block">
+                            <label for="image" class="col-md-4 control-label"></label>
+							<div class="col-md-6">
+								<img id="image" src="{{ Storage::url($profile->imagefilename) }}" alt="Profile image" style="height:228px;display: block">
                                 <!-- <input id="url" type="url" class="form-control" name="url" value="{{ old('url') }}">
 								.image-wrapper {
 								  padding: 5px;
@@ -90,13 +91,21 @@
 								  height auto;
 								  width: 200px;
 								} -->
+								<!--<input id="image2" type="text" class="form-control" name="image2" value="{{ Storage::url($profile->imagefilename) }}">-->
                             </div>
                         </div>
 						
-						<div class="form-group">						
-							<input id="image" type="file" class="form-control" name="image" accept="image/*" value="{{ old('$profile->imagefilename') }}">
-							
-							<!--<script src="../../ckeditor/ckeditor.js"></script>-->
+						<div class="form-group">
+							<label for="imagefile" class="col-md-4 control-label">Загрузить изображение</label>
+							<input id="imagefile" type="file" class="form-control" name="imagefile" accept="image/*" value="{{ $profile->imagefilename }}">
+							    @if ($errors->has('imagefile'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('imagefile') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						
+						<div class="form-group"> 
 							<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 							<!--<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>-->
 							<textarea name="addition" id="addition" rows="10" cols="80" style="visibility: visible">

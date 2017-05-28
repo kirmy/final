@@ -18,7 +18,7 @@
 	</style>
 </head>
 <body class="container">
-	<form class="form-horizontal" role="form" method="POST" action="uploadfile" enctype="multipart/form-data">											
+	<form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.update', 'qwe') }}" enctype="multipart/form-data">											
 
 
 		@if ($message = Session::get('success'))
@@ -27,9 +27,9 @@
 		        <strong>{{ $message }}</strong>
 				<strong>{{ Session::get('path') }}</strong>	
 		</div>
-		<img src="/images/{{ Session::get('path') }}" style="width:304px;height:228px;">
+		<img src="images/{{ Session::get('path') }}" style="width:304px;height:228px;">
 		@endif
-
+		<img src="kirill.jpg" style="width:304px;height:228px;">
 		<!-- <form action="{{ url('image-upload') }}" enctype="multipart/form-data" method="POST"> -->
 			{{ csrf_field() }}
 			<div class="row">

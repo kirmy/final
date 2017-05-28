@@ -46,15 +46,15 @@ class ProfileController extends Controller
             'telefon' => request('telefon'),
             'url' => request('url'),
 			'addition' => request('addition'),
-			'image' => request('image')
+			'imagefile' => request('imagefile')
         ];
 		
         if ($this->validateData($data)) {
-            //dd($data);
-			$imageName =  Auth::user()->login . '.' . $request->file('image')->getClientOriginalExtension();
-			$data['imagefilename'] = $request->file('image')->storeAs('public/images', $imageName);
-			//dd($data);
-			
+            if ($request->hasFile('imagefile')) {
+				//dd($data);
+				$imageName =  Auth::user()->login . '.' . $request->file('imagefile')->getClientOriginalExtension();
+				$data['imagefilename'] = $request->file('imagefile')->storeAs('public/images', $imageName);
+			}
 			//$data->imagefilename
             Auth::user()->profile()->create($data);
             //dd($data);
@@ -95,7 +95,9 @@ class ProfileController extends Controller
         $profile = User::where('login', $login)->first()->profile;
         //dd($profile->imagefilename);
         //return view('profile', compact('name','birthday','email', 'telefon', 'url'));
-        return view('profiles.edit', ['profile' => $profile, 'login' => $login]);
+        //$contents = Storage::url($profile->imagefilename);
+		//dd($contents);
+		return view('profiles.edit', ['profile' => $profile, 'login' => $login]);
     }
 
     /**
@@ -115,14 +117,17 @@ class ProfileController extends Controller
             'telefon' => request('telefon'),
             'url' => request('url'),
 			'addition' => request('addition'),
-			'image' => request('image')
+			'imagefile' => request('imagefile')
         ];
-		//dd($data);
+		
         if ($this->validateData($data)) {
-            //dd($data);
-            //Auth::user()->
-			$imageName =  Auth::user()->login . '.' . $request->file('image')->getClientOriginalExtension();
-			$data['imagefilename'] = $request->file('image')->storeAs('public/images', $imageName);
+			if ($request->hasFile('imagefile')) {
+				//dd($data);
+				$imageName =  Auth::user()->login . '.' . $request->file('imagefile')->getClientOriginalExtension();
+				$data['imagefilename'] = $request->file('imagefile')->storeAs('public/images', $imageName);
+			}
+			//else unset($data['imagefile']);
+			//dd($data);
 			$profile->update($data);
             return redirect('/users');
 			//return response('', 201);
@@ -151,7 +156,7 @@ class ProfileController extends Controller
             'email' => 'nullable|email',
             'telefon' => 'nullable|numeric',
             'url' => 'nullable|url',
-			'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
+			'imagefilename' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ];
 
         $validator = \Validator::make($data, $rules);
@@ -173,3 +178,4 @@ class ProfileController extends Controller
 		}
 		return redirect('/users');
 }
+*/

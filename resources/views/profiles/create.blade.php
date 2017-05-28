@@ -81,8 +81,9 @@
                         </div>
 						
 						<div class="form-group">  
-                            <div class="col-md-6">
-								<img src="/images/P1060214.JPG" alt="Profile image" style="width:304px;height:228px;display: block">
+                            <label for="image" class="col-md-4 control-label"></label>
+							<div class="col-md-6">
+								<img id="image" src="" alt="Profile image" style="height:228px;display: block">
                                 <!-- <input id="url" type="url" class="form-control" name="url" value="{{ old('url') }}">
 								.image-wrapper {
 								  padding: 5px;
@@ -90,21 +91,38 @@
 								  height auto;
 								  width: 200px;
 								} -->
+								<!--<input id="image2" type="text" class="form-control" name="image2" value="">-->
                             </div>
                         </div>
 						
 						<div class="form-group">
-                            <label for="image" class="col-md-4 control-label">Загрузить изображение</label>
+                            <label for="imagefile" class="col-md-4 control-label">Загрузить изображение</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="file" class="form-control" name="image" accept="image/*" value="{{ old('image') }}">
-
-                                @if ($errors->has('image'))
+								<input id="imagefile" type="file" class="form-control" name="imagefile" accept="image/*" value="">
+                                @if ($errors->has('imagefile'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('image') }}</strong>
+                                        <strong>{{ $errors->first('imagefile') }}</strong>
                                     </span>
                                 @endif
                             </div>
+                        </div>
+						
+						<div class="form-group">							
+							<!--<script src="../../ckeditor/ckeditor.js"></script>-->
+							<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+							<!--<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>-->
+							<textarea name="addition" id="addition" rows="10" cols="80" style="visibility: visible">
+								<!--This is my textarea to be replaced with CKEditor.-->
+							</textarea>
+							<script>
+							// Replace the <textarea id="editor1"> with a CKEditor
+							// instance, using default configuration.
+							var editor = CKEDITOR.replace( 'addition' );
+							//var value = "";
+							//console.log( value );
+							//editor.setData( "" );
+							</script>
                         </div>
 						
                         <div class="form-group">
