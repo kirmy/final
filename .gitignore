@@ -9,4 +9,4 @@
 Homestead.json
 Homestead.yaml
 .env
-/resources/node-socket
+/resources/node-socket/node_modules
