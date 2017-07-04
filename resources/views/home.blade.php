@@ -6,6 +6,9 @@
 	    <!--@{{ items }}-->
             <div class="panel panel-info" v-for="user in users">
 		@{{ user.login }}
+        <div class="col-md-8 col-md-offset-4">
+                <input type="checkbox" v-on:click="toggleLike(user)" />Профиль нравится                            
+            </div>
             </div>
 	</div>
         <script src="https://unpkg.com/vue"></script>
@@ -18,7 +21,7 @@
                 el: '#rest-client',
                 data: {
                     message: "{{ asset('js/app.js') }}",
-                    users: [{login:'k1'}, {login:'d2'}, {login:'test3'}],
+                    users: [],
                     newItem: {
                         name: '',
                         link: ''
@@ -43,11 +46,11 @@
                         }
                         this.editedItem = item;
                     },
-                    getItems: function() {
+                    getUsers: function() {
                         this.$http.get('/users').then(response => {
 			    //console.log(response.body, this.items);
                             this.users = response.body;
-			    console.log(this.users[0].login);
+			    //console.log(this.users[0].login);
                             this.errors = {
                                 name: '',
                                 link: ''
@@ -74,9 +77,15 @@
                             this.editedItem = null;
                             this.getItems();
                         });
+                    },
+                    toggleLike: function(user) {
+                        //console.log(user.login);
+                        this.$http.post('/users/toggleLike', { 'login': user.login }).then(function(response) {
+                            console.log(response.body);
+                        });
                     }
                 }
             });
-            app1.getItems();
+            app1.getUsers();
         </script>  
 @endsection

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Database\Eloquent\Model;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return 'login';
     }
+    
+    public function likes()
+	{
+		return $this->belongsToMany(Profile::class);//, 'profileToProfiles', 'id', 'id');
+	}
 }

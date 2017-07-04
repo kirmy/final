@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Profile;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserController extends Controller
 {
@@ -89,5 +91,15 @@ class UserController extends Controller
 		Session::flash('message', 'Successfully deleted the user!');
 		return Redirect::to('users');
 		
+    }
+
+    public function toggleLike(Request $request) {
+        $login = request('login');
+        var_dump($login);
+        //dd($request);
+        $user = User::where('login', $login)->first();
+        var_dump($user->id);
+        Auth::user()->likes()->toggle($user->id);
+        return back(); //$request;
     }
 }

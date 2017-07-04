@@ -24,8 +24,19 @@ class Profile extends Model
         'name', 'birthday', 'email', 'telefon', 'url', 'addition', 'imagefilename'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo('App\User', 'id');
-    }  
+	public function user()
+	{
+		return $this->belongsTo('App\User', 'id');
+	}
+	
+	// public function likedProfiles()
+	// {
+		// return $this->belongsToMany(Profile::class, 'profileToProfiles', 'id', 'id');
+	// }
+    
+    public function likingUsers()
+	{
+		return $this->belongsToMany(User::class);//, 'profileToProfiles', 'id', 'id');
+	}
+    
 }

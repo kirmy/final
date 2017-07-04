@@ -91,7 +91,7 @@
 								  height auto;
 								  width: 200px;
 								} -->
-								<!--<input id="image2" type="text" class="form-control" name="image2" value="{{ Storage::url($profile->imagefilename) }}">-->
+								<input id="image2" type="text" class="form-control" name="image2" value="{{ Storage::url($profile->imagefilename) }}">
                             </div>
                         </div>
 						

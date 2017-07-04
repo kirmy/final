@@ -15,10 +15,9 @@ Route::group(['middleware' => 'auth'], function () {
         return view('home');
     })->name('home');
 */
-	//Route::get('/destroyprofile/{profile}/destroy', 'ProfileController@destroyProfile')->name('destroyprofile');
 	Route::resource('profiles', 'ProfileController', ['except' => ['index', 'show']]);
 	Route::resource('users', 'UserController', ['except' => ['index', 'show']]);
-
+	//Route::post('/togglelike', 'UserController@toggleLike')->name('togglelike');
 });
 
 Route::get('/', function () {
@@ -27,7 +26,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::get('profiles/{profile}/edit', 'ProfileController@edit');
+Route::post('/togglelike', 'UserController@toggleLike')->name('togglelike');
 Route::get('/home', 'HomeController@index');
 Route::get('uploadform', 'HomeController@imageUpload');
 Route::post('uploadfile', 'HomeController@imageUploadPost')->name('uploadf');

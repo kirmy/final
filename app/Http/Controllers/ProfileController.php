@@ -51,7 +51,6 @@ class ProfileController extends Controller
 		
         if ($this->validateData($data)) {
             if ($request->hasFile('imagefile')) {
-				//dd($data);
 				$imageName =  Auth::user()->login . '.' . $request->file('imagefile')->getClientOriginalExtension();
 				$data['imagefilename'] = $request->file('imagefile')->storeAs('public/images', $imageName);
 			}
@@ -108,7 +107,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $login)
-    {	//dd($login);
+    {
 		$profile = User::where('login', $login)->first()->profile;
 		$data = [
             'name' => request('name'),
@@ -122,7 +121,6 @@ class ProfileController extends Controller
 		
         if ($this->validateData($data)) {
 			if ($request->hasFile('imagefile')) {
-				//dd($data);
 				$imageName =  Auth::user()->login . '.' . $request->file('imagefile')->getClientOriginalExtension();
 				$data['imagefilename'] = $request->file('imagefile')->storeAs('public/images', $imageName);
 			}
@@ -141,9 +139,8 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($login)
-    {	//dd('destroy', $login);
+    {
         $profile = User::where('login', $login)->first()->profile;
-        //dd($profile);
 		$profile->delete();
         return redirect('/users');
     }
