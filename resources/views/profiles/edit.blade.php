@@ -1,11 +1,13 @@
 <!-- resources/views/profiles/edit.blade.php -->
 @extends('layouts.app')
 @section('content') 
-<div class="container">
+
+<div class="container" id="message1" v-cloak>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Редактирование профиля {{ $profile->name }}</div>
+                <div>@{{ recievedMessage }}</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('profiles.update', $login) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -111,14 +113,14 @@
 							<textarea name="addition" id="addition" rows="10" cols="80" style="visibility: visible">
 								<--This is my textarea to be replaced with CKEditor.-->
 							</textarea>
-							<script>
+							<!--<script>
 							// Replace the <textarea id="editor1"> with a CKEditor
 							// instance, using default configuration.
 							var editor = CKEDITOR.replace( 'addition' );
 							//var value = "{ $profile->addition }}";
 							//console.log( value );
 							editor.setData( "{!! $profile->addition !!}" );
-							</script>
+							</script>-->
                         </div>
 						
 						<div class="form-group">
@@ -135,5 +137,50 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('script')
+
+<script src="https://unpkg.com/vue"></script>
+<!--<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.1/socket.io.js"></script>
+<!--<script src="//code.jquery.com/jquery.js"></script>-->
+<!-- Bootstrap JavaScript -->
+<!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+
+
+<script>
+    var socket = io('{{ URL::to('/') }}:3000');
+
+    // Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('[name="_token"]').getAttribute('value');
+
+    // console.log('Профиль\'{{ $profile->name }}\'изменен ');
+
+    var message1 = new Vue({
+        el: '#message1',
+
+        data: {
+            recievedMessage: 'Сообщение'
+        },
+
+        methods: {
+            recieveUpdate: function(data) {
+                this.recievedMessage = "Профиль " + data.login + " изменен !";
+                console.log("Профиль " + data.login + " изменен !");
+            }
+        },
+        
+        created: function() {
+            socket.on('info-channel:update', this.recieveUpdate);
+        },
+
+            // isFinished: function(order) {
+            //     return order.status.name === 'done';
+            // }
+        // },
+
+    });
+
+</script>
 
 @stop

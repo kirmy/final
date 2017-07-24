@@ -55,8 +55,8 @@ class HomeController extends Controller
 			->with('success', 'Image Uploaded successfully.')
 			->with('path', $imageName);
 	}
-	/*public function usersList()
-	{
-		return view('userslist');
-	}*/
+	// public function usersList()
+	// {
+	// 	return view('_users');
+	// }
 }

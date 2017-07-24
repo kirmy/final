@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redis;
 
 class ProfileController extends Controller
 {
@@ -70,7 +71,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($login)
-    {	//dd('show', $login);
+    {//	dd('show', $login);
         $profile = User::where('login', $login)->firstOrFail()->profile;
         //$c = compact('profile');
         $name = $profile->name;
@@ -127,6 +128,16 @@ class ProfileController extends Controller
 			//else unset($data['imagefile']);
 			//dd($data);
 			$profile->update($data);
+            var_dump('info-channel');
+            Redis::publish(
+                'info-channel',
+                json_encode([
+                    'message' => 'update',
+                    'data' => [
+                        'login' => $login,
+                    ]
+                ])
+            );
             return redirect('/users');
 			//return response('', 201);
         }

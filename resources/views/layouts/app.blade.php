@@ -113,9 +113,9 @@
 	<!-- Bootstrap JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<!-- Vue.js -->
-	<script src="https://unpkg.com/vue"></script>
-	<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
-
+	<!--<script src="https://unpkg.com/vue"></script>
+	<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>-->
+    @yield('script')
     <!--<script src="{{ asset('js/app.js') }}"></script> -->
 </body>
 </html>

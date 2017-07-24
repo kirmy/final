@@ -36,7 +36,7 @@ Route::post('uploadfile', 'HomeController@imageUploadPost')->name('uploadf');
 });*/
 Route::resource('users', 'UserController', ['only' => ['index', 'show']]);
 Route::resource('profiles', 'ProfileController', ['only' => ['index', 'show']]);
-//Route::get('/profiles/userslist', 'HomeController@usersList')->name('profiles.show');
+// Route::get('userslist', 'HomeController@usersList');//->name('profiles.show');
 
 
 //Route::get('user/{id}', 'UserController@edit');
